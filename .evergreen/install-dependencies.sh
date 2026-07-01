@@ -36,11 +36,22 @@ echo "export CARGO_NET_GIT_FETCH_WITH_CLI=true" >> ${CARGO_HOME}/env
 source ${CARGO_HOME}/env
 
 ## libmongocrypt
+LIBMONGOCRYPT_TAG="1.19.2"
 
 mkdir native
 cd native
-curl -sSfO https://s3.amazonaws.com/mciuploads/libmongocrypt/all/master/latest/libmongocrypt-all.tar.gz
-tar xzf libmongocrypt-all.tar.gz
+git clone https://github.com/mongodb/libmongocrypt --depth=1 --branch $LIBMONGOCRYPT_TAG
+
+if [ "Windows_NT" == "$OS" ]; then
+    # Windows requires its own ceremony
+    . libmongocrypt/.evergreen/init.sh
+    export VS_VERSION=15
+    export VS_TARGET_ARCH=amd64
+    export CMAKE_GENERATOR=Ninja
+    bash "$EVG_DIR/env-run.sh" bash "$EVG_DIR/build_all.sh"
+else
+    ./libmongocrypt/.evergreen/compile.sh
+fi
 
 if [ "Windows_NT" == "$OS" ]; then
     chmod +x ${MONGOCRYPT_LIB_DIR}/../bin/*.dll

@@ -29,7 +29,7 @@ pre:
     working_dir: "src"
     script: |
       export PROJECT_DIRECTORY="$(pwd)"
-      export MONGOCRYPT_LIB_DIR="$PROJECT_DIRECTORY/native/${libmongocrypt_os}/lib"
+      export MONGOCRYPT_LIB_DIR="$PROJECT_DIRECTORY/native/install/libmongocrypt/lib"
       export LD_LIBRARY_PATH="$MONGOCRYPT_LIB_DIR:$LD_LIBRARY_PATH"
       export DRIVERS_TOOLS="$(pwd)/../drivers-tools"
 
