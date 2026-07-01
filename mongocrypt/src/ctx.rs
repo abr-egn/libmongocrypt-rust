@@ -423,7 +423,9 @@ pub enum Algorithm {
     #[deprecated]
     RangePreview,
     Range,
+    #[deprecated]
     TextPreview,
+    String,
 }
 
 impl Algorithm {
@@ -436,7 +438,9 @@ impl Algorithm {
             #[allow(deprecated)]
             Self::RangePreview => b"RangePreview\0",
             Self::Range => b"Range\0",
+            #[allow(deprecated)]
             Self::TextPreview => b"TextPreview\0",
+            Self::String => b"String\0",
         };
         unsafe { CStr::from_bytes_with_nul_unchecked(bytes) }
     }
